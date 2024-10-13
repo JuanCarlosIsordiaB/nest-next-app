@@ -17,18 +17,33 @@ export class ProductsService {
   }
 
   findAll() {
-    return `This action returns all products`;
+    return this.prisma.product.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  findOne(id: string) {
+    const productFound = this.prisma.product.findUnique({where: {id}});
+    if(!productFound){
+      throw new Error('Product not found');
+    }
+    return productFound;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(id: string, updateProductDto: UpdateProductDto) {
+    const productFound = this.prisma.product.findUnique({where: {id}});
+    if(!productFound){
+      throw new Error('Product not found');
+    }
+    return this.prisma.product.update({
+      where: {id},
+      data: updateProductDto
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  remove(id: string) {
+    const productFound = this.prisma.product.findUnique({where: {id}});
+    if(!productFound){
+      throw new Error('Product not found');
+    }
+    return this.prisma.product.delete({where: {id}});
   }
 }
