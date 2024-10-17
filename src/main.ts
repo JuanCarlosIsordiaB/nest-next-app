@@ -7,13 +7,18 @@ async function bootstrap() {
   app.setGlobalPrefix('api'); // /api/:
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Products CRUD')
+    .setDescription('The products API description')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('products')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  //localhost:4000/api to see the swagger documentation
+
+  app.enableCors(); // Enable CORS make calls from different origins
+
+
 
 
   await app.listen(4000);
